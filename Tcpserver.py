@@ -1,6 +1,23 @@
 import socket, sys
+def lenght(strvar0):
+    a=''
+    c=0
+    while True:
+        try:
+            a=strvar0[c]
+            c=c+1
+        except Exception as e:
+            c=c-1
+            break
+    return c
+def b_to_str(bv):
+    bvt=str(bv)
+    for x in range(2, lenght(bvt)-1):
+        out=out+bvt[x]
+    return out
 errlvl=False
 TcpServer=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+print("________  _____     ______ \n\___  __\ \  __\    \  __ \ \n    \ \    \ \       \ \_\ \ \n     \ \    \ \       \  ___\ \n      \ \    \ \___    \ \ \n       \_\    \____\    \_\   SERVER")
 while(True):
     print("Escribe la ip en la que escuchar(Por defecto en localhost):\n --Si solo quieres que se conecte tu PC, localhost.\n --Si quieres que se puedan conectar los dispositivos de la red local, escribe tu IP local("+socket.gethostbyname(socket.gethostname())+").\n --Si quieres que se pueda conectar todo internet, escribe tu IP publica(http://miip.es/)")
     ipl=input(">>> ")
@@ -29,8 +46,9 @@ while(True):
     try:
         print("Conexion TCP entrante de", client_address[0]+"\nRecibiendo datos:")
         while(True):
-            TcpMsg=connection.recv(256)
-            print(TcpMsg)
+            TcpMsg=connection.recv(1024)
+            TcpMsgt=b_to_str(TcpMsg)
+            print(TcpMsgt)
             ans=input("Escribe una Respuesta: ")
             connection.sendall(bytes(ans, 'utf-8'))
     except Exception as e:
