@@ -1,20 +1,4 @@
 import socket, sys
-def lenght(strvar0):
-    a=''
-    c=0
-    while True:
-        try:
-            a=strvar0[c]
-            c=c+1
-        except Exception as e:
-            c=c-1
-            break
-    return c
-def b_to_str(bv):
-    bvt=str(bv)
-    for x in range(2, lenght(bvt)-1):
-        out=out+bvt[x]
-    return out
 errlvl=False
 TcpServer=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 print("________  _____     ______ \n\___  __\ \  __\    \  __ \ \n    \ \    \ \       \ \_\ \ \n     \ \    \ \       \  ___\ \n      \ \    \ \___    \ \ \n       \_\    \____\    \_\   SERVER")
@@ -40,6 +24,7 @@ while(True):
             print("Error: La IP o el Puerto no son validos")
     else:
         print("Error: La IP o el puerto no son validos")
+
 TcpServer.listen(1)
 while(True):
     connection, client_address=TcpServer.accept()
@@ -47,7 +32,7 @@ while(True):
         print("Conexion TCP entrante de", client_address[0]+"\nRecibiendo datos:")
         while(True):
             TcpMsg=connection.recv(1024)
-            TcpMsgt=b_to_str(TcpMsg)
+            TcpMsgt=bytes.decode(TcpMsg, 'utf-8')
             print(TcpMsgt)
             ans=input("Escribe una Respuesta: ")
             connection.sendall(bytes(ans, 'utf-8'))
